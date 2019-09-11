@@ -8,7 +8,7 @@ http.createServer((request, response) => {
   let filePath = '';
 
   if (q.pathname.includes('documentation')) {
-    filePath = '${__dirname}/documentation.html';
+    filePath = `${__dirname}/documentation.html`;
   } else {
     filePath = 'index.html';
   }
@@ -24,7 +24,7 @@ fs.readFile(filePath, (err, data) => {
   response.end();
 });
 
-fs.appendFile('log.txt', 'URL: ${addr}\nTimestamp: ${Date()}\n\n', err => {
+fs.appendFile('log.txt', `URL: ${addr}\nTimestamp: ${Date()}\n\n`, err => {
   if (err) {
     console.log(err);
     response.end();
@@ -33,6 +33,7 @@ fs.appendFile('log.txt', 'URL: ${addr}\nTimestamp: ${Date()}\n\n', err => {
     response.end();
   }
 });
+})
   .listen(3000, () => {
-    console.log("App listening on port 3000")
+    console.log("App listening on port 3000");
   });
