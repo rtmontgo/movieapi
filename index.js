@@ -6,9 +6,46 @@ const app = express();
 app.use(morgan('common'));
 
 let topMovies = [{
-  Title: Snatch,
-  Director: Guy Ritchie
-}]
+  Title: 'Get Out',
+  Director: 'Jordan Peele'
+},
+{
+  Title: 'Rosemary\'s Baby',
+  Director: 'Roman Polansk'
+},
+{
+  Title: 'Let the Right One In',
+  Director: 'Tomas Alfredson'
+},
+{
+  Title: 'Hereditary',
+  Director: 'Ari Aster'
+},
+{
+  Title: 'Night of the Living Dead',
+  Director: 'George A. Romero'
+},
+{
+  Title: 'The Witch',
+  Director: 'Robert Eggers'
+},
+{
+  Title: 'The Cabin in the Woods',
+  Director: 'Drew Goddard'
+},
+{
+  Title: 'The Conjuring',
+  Director: 'James Wan'
+},
+{
+  Title: 'The Exorcist',
+  Director: 'William Friedkin'
+},
+{
+  Title: 'The Shining',
+  Director: 'Stanley Kubrick'
+}
+];
 
 var myLogger = function(req, res, next) {
   console.log(req.url);
