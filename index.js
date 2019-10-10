@@ -12,6 +12,24 @@ mongoose.connect('mongodb://localhost:27017/HoHdb', {useNewUrlParser: true});
 
 const app = express();
 
+const cors = require('cors');
+app.use(cors());
+
+const { check, validationResult } = require('express-validator');
+
+var allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(cors({
+  origin: function(origin, callback){
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ //If a specific origin isn't found on the list of allowed origins
+      var message = 'The CORS policy for this application doesn\'t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
+
 app.use(morgan('common'));
 
 var auth = require('./auth')(app);
@@ -103,7 +121,19 @@ app.get('/users', passport.authenticate('jwt', { session: false }), function(req
 //   Birthday : Date
 // }
 
-app.post('/users', passport.authenticate('jwt', { session: false }), function(req, res) {
+app.post('/users', [check('Username', 'Username is required'.isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()], function(req, res) {
+    //check validation object for errors
+    var errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.json(422).json({ errors: errors.array()
+      });
+    }
+
+  var hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username : req.body.Username })
   .then(function(user) {
     if (user) {
@@ -112,7 +142,7 @@ app.post('/users', passport.authenticate('jwt', { session: false }), function(re
       Users
       .create({
         Username: req.body.Username,
-        Password: req.body.Password,
+        Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
       })
@@ -145,7 +175,18 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 //Update user profile
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), function(req, res) {
+app.put('/users/:Username', [check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()], passport.authenticate('jwt', { session: false }), function(req, res) {
+
+    var errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array()
+      });
+    }
+
   Users.findOneAndUpdate({ Username : req.params.Username }, {
     $set :
     {
@@ -202,5 +243,7 @@ app.use(function (err, req, res,  next) {
 
 
 //listen for requests
-app.listen(8080, () =>
-console.log('Listening on port 8080.'));
+var port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", function() {
+  console.log("Listening on Port 3000");
+});
