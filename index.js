@@ -8,7 +8,8 @@ const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
-mongoose.connect('mongodb://localhost:27017/HoHdb', {useNewUrlParser: true});
+//mongoose.connect('mongodb://localhost:27017/HoHdb', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://rtmontgo:Zombie3!@tmont-3jagp.mongodb.net/HoHdb?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 const app = express();
 
