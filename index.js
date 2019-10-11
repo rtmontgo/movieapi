@@ -122,10 +122,11 @@ app.get('/users', passport.authenticate('jwt', { session: false }), function(req
 //   Birthday : Date
 // }
 
-app.post('/users', [check('Username', 'Username is required').isLength({min: 5}),
+app.post('/users',
+  [check('Username', 'Username is required').isLength({min: 5}),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()], function(req, res) {
+  check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
     //check validation object for errors
     var errors = validationResult(req);
 
@@ -176,10 +177,12 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 //Update user profile
-app.put('/users/:Username', [check('Username', 'Username is required').isLength({min: 5}),
+app.put('/users/:Username',
+  [check('Username', 'Username is required').isLength({min: 5}),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()], passport.authenticate('jwt', { session: false }), function(req, res) {
+  check('Email', 'Email does not appear to be valid').isEmail()],
+  passport.authenticate('jwt', { session: false }), (req, res) => {
 
     var errors = validationResult(req);
 
