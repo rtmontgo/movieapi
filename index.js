@@ -1,13 +1,13 @@
 const express = require('express');
   morgan = require('morgan');
   bodyParser = require('body-parser');
-  uuid = require('uuid');
-
-const mongoose = require('mongoose');
-const Models = require('./models.js');
+  mongoose = require('mongoose');
+  Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
+
+mongoose.set('useFindAndModify', false);
 //mongoose.connect('mongodb://localhost:27017/HoHdb', {useNewUrlParser: true});
 mongoose.connect('mongodb+srv://rtmontgo:Zombie3!@tmont-3jagp.mongodb.net/HoHdb?retryWrites=true&w=majority', {useNewUrlParser: true});
 
@@ -20,17 +20,6 @@ const { check, validationResult } = require('express-validator');
 
 var allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
-app.use(cors({
-  origin: function(origin, callback){
-    if(!origin) return callback(null, true);
-    if(allowedOrigins.indexOf(origin) === -1){ //If a specific origin isn't found on the list of allowed origins
-      var message = 'The CORS policy for this application doesn\'t allow access from origin ' + origin;
-      return callback(new Error(message ), false);
-    }
-    return callback(null, true);
-  }
-}));
-
 app.use(morgan('common'));
 
 var auth = require('./auth')(app);
@@ -38,16 +27,12 @@ var auth = require('./auth')(app);
 const passport = require('passport');
 require('./passport');
 
-var myLogger = function(req, res, next) {
-  console.log(req.url);
-  next();
-};
 
-//GET requests
-app.use(myLogger);
+//Middleware functions
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
+//GET requests
 app.get('/', function(req, res) {
   res.send('Welcome to your Home of Horror!')
 });
@@ -177,12 +162,12 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 //Update user profile
-app.put('/users/:Username',
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
   [check('Username', 'Username is required').isLength({min: 5}),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
   check('Email', 'Email does not appear to be valid').isEmail()],
-  passport.authenticate('jwt', { session: false }), (req, res) => {
+   (req, res) => {
 
     var errors = validationResult(req);
 
@@ -190,6 +175,8 @@ app.put('/users/:Username',
       return res.status(422).json({ errors: errors.array()
       });
     }
+
+    var hashedPassword = Users.hashPassword(req.body.Password);
 
   Users.findOneAndUpdate({ Username : req.params.Username }, {
     $set :
