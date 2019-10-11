@@ -18,7 +18,6 @@ app.use(cors());
 
 const { check, validationResult } = require('express-validator');
 
-var allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
 
 app.use(morgan('common'));
 
