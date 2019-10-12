@@ -1,36 +1,27 @@
 const express = require('express');
-  morgan = require('morgan');
-  bodyParser = require('body-parser');
-  mongoose = require('mongoose');
-  Models = require('./models.js');
-  cors = require('cors');
+const  app = express();
+const  morgan = require('morgan');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
+const passport = require('passport');
+const cors = require('cors');
+const { check, validationResult } = require('express-validator');
+require('./passport');
 
-mongoose.set('useFindAndModify', false);
 //mongoose.connect('mongodb://localhost:27017/HoHdb', {useNewUrlParser: true});
 mongoose.connect('mongodb+srv://rtmontgo:Zombie3!@tmont-3jagp.mongodb.net/HoHdb?retryWrites=true&w=majority', {useNewUrlParser: true});
 
-const app = express();
-
-const { check, validationResult } = require('express-validator');
-
-
-
-
-var auth = require('./auth')(app);
-
-const passport = require('passport');
-require('./passport');
-
-
 //Middleware functions
 app.use(express.static('public'));
-app.use(bodyParser.json());
 app.use(morgan('common'));
+app.use(bodyParser.json());
 app.use(cors());
 
+var auth = require('./auth')(app);
 
 //GET requests
 app.get('/', function(req, res) {
