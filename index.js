@@ -23,6 +23,11 @@ app.use(cors());
 
 var auth = require('./auth')(app);
 
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something got slashed!');
+});
+
 //GET requests
 app.get('/', function(req, res) {
   res.send('Welcome to your Home of Horror!')
@@ -103,7 +108,7 @@ app.post('/users', function (req, res) {
   req.checkBody('Username').isAlphanumeric();
   req.checkBody('Password').notEmpty();
   req.checkBody('Email').isEmail();
-  
+
     //check validation object for errors
     var errors = req.validationErrors();
 
@@ -216,10 +221,7 @@ function(err, updatedUser) {
 });
 });
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something got slashed!');
-});
+
 
 
 //listen for requests
