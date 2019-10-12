@@ -107,7 +107,7 @@ app.post('/users',
     var errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      return res.json(422).json({ errors: errors.array()
+      return res.status(422).json({ errors: errors.array()
       });
     }
 
