@@ -107,45 +107,41 @@ app.get('/users', passport.authenticate('jwt', { session: false }), function(req
 //   Birthday : Date
 // }
 
-app.post('/Users',[
-// Validation logic here for request
-  check('Username').isAlphanumeric(),
-  check('Password').isLength({ min: 5}),
-  check('Email').normalizeEmail().isEmail()
-], (req, res) => {
+app.post('/users',
+  [check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
+    //check validation object for errors
+    var errors = validationResult(req);
 
-  // check validation object for errors
-  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.json(422).json({ errors: errors.array()
+      });
+    }
 
-  if (!errors.isEmpty) {
-    return res.status(422).json({ errors: errors.array});
-  }
-
-  var hashedPassword = Users.hashPassword(req.body.Password
-    );
-  Users.findOne({
-    Username : req.body.Username
-  }) //Search to see if a user with requested username already exists
+  var hashedPassword = Users.hashPassword(req.body.Password);
+  Users.findOne({ Username : req.body.Username })
   .then(function(user) {
     if (user) {
-      // If the user is found, send a response that is already exists
-      return res.status(400).send(req.body.Username + 'already exists');
+      return res.status(400).send(req.body.Username + "already exists");
     } else {
-      Users.create({
+      Users
+      .create({
         Username: req.body.Username,
         Password: hashedPassword,
         Email: req.body.Email,
         Birthday: req.body.Birthday
       })
-      .then(function(user) {res.status(201).json(user)})
+      .then(function(user) {res.status(201).json(user) })
       .catch(function(error) {
         console.error(error);
-        res.status(500).send('Error: ' + error);
+        res.status(500).send("Error: " + error);
       })
     }
   }).catch(function(error) {
     console.error(error);
-    res.status(500).send('Error: ' + error);
+    res.status(500).send("Error: " + error);
   });
 });
 
@@ -231,7 +227,7 @@ function(err, updatedUser) {
 });
 });
 
-app.use(function (err, req, res,  next) {
+app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something got slashed!');
 });
