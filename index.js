@@ -98,17 +98,17 @@ app.get('/users', passport.authenticate('jwt', { session: false }), function(req
 //   Birthday : Date
 // }
 
-app.post('/users',
-  [check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
+app.post('/users', function (req, res) {
+  req.checkBody('Username').isLength({min: 5});
+  req.checkBody('Username').isAlphanumeric();
+  req.checkBody('Password').notEmpty();
+  req.checkBody('Email').isEmail();
+  
     //check validation object for errors
-    var errors = validationResult(req);
+    var errors = req.validationErrors();
 
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array()
-      });
+    if (errors) {
+      return res.status(422).json({ errors: errors });
     }
 
   var hashedPassword = Users.hashPassword(req.body.Password);
@@ -128,7 +128,7 @@ app.post('/users',
       .catch(function(error) {
         console.error(error);
         res.status(500).send("Error: " + error);
-      })
+      });
     }
   }).catch(function(error) {
     console.error(error);
@@ -153,18 +153,16 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 //Update user profile
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
-  [check('Username', 'Username is required').isLength({min: 5}),
-  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-  check('Password', 'Password is required').not().isEmpty(),
-  check('Email', 'Email does not appear to be valid').isEmail()],
-   (req, res) => {
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }), function(req, res) {
+  req.checkBody('Username', 'Username is required').isLength({min: 5});
+  req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric();
+  req.checkBody('Password', 'Password is required').notEmpty();
+  req.checkBody('Email', 'Email does not appear to be valid').isEmail();
 
-    var errors = validationResult(req);
+    var errors = req.validationErrors();
 
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array()
-      });
+    if (errors) {
+      return res.status(422).json({ errors: errors });
     }
 
     var hashedPassword = Users.hashPassword(req.body.Password);
