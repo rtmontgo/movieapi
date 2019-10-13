@@ -1,33 +1,35 @@
 const express = require('express');
-const app = express();
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const uuid = require('mongoose')
-const mongoose = require('mongoose');
-const Models = require('./models.js');
-
+  morgan = require('morgan');
+  bodyParser = require('body-parser');
+  mongoose = require('mongoose');
+  Models = require('./models.js');
+  cors = require('cors');
 const Movies = Models.Movie;
 const Users = Models.User;
-const passport = require('passport');
-const cors = require('cors');
-const { check, validationResult } = require('express-validator');
-require('./passport');
 
+mongoose.set('useFindAndModify', false);
 //mongoose.connect('mongodb://localhost:27017/HoHdb', {useNewUrlParser: true});
-mongoose.connect('mongodb+srv://rtmontgo:Zombie3%21@tmont-3jagp.mongodb.net/HoHdb?retryWrites=true&w=majority', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://rtmontgo:Zombie3!@tmont-3jagp.mongodb.net/HoHdb?retryWrites=true&w=majority', {useNewUrlParser: true});
 
-//Middleware functions
-app.use(express.static('public'));
-app.use(morgan('common'));
-app.use(bodyParser.json());
-app.use(cors());
+const app = express();
+
+const { check, validationResult } = require('express-validator');
+
+
+
 
 var auth = require('./auth')(app);
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send('Something got slashed!');
-});
+const passport = require('passport');
+require('./passport');
+
+
+//Middleware functions
+app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(morgan('common'));
+app.use(cors());
+
 
 //GET requests
 app.get('/', function(req, res) {
@@ -104,17 +106,17 @@ app.get('/users', passport.authenticate('jwt', { session: false }), function(req
 //   Birthday : Date
 // }
 
-app.post('/users', function (req, res) {
-  req.checkBody('Username').isLength({min: 5});
-  req.checkBody('Username').isAlphanumeric();
-  req.checkBody('Password').notEmpty();
-  req.checkBody('Email').isEmail();
-
+app.post('/users',
+  [check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
     //check validation object for errors
-    var errors = req.validationErrors();
+    var errors = validationResult(req);
 
-    if (errors) {
-      return res.status(422).json({ errors: errors });
+    if (!errors.isEmpty()) {
+      return res.json(422).json({ errors: errors.array()
+      });
     }
 
   var hashedPassword = Users.hashPassword(req.body.Password);
@@ -134,7 +136,7 @@ app.post('/users', function (req, res) {
       .catch(function(error) {
         console.error(error);
         res.status(500).send("Error: " + error);
-      });
+      })
     }
   }).catch(function(error) {
     console.error(error);
@@ -159,16 +161,18 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 //Update user profile
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), function(req, res) {
-  req.checkBody('Username', 'Username is required').isLength({min: 5});
-  req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric();
-  req.checkBody('Password', 'Password is required').notEmpty();
-  req.checkBody('Email', 'Email does not appear to be valid').isEmail();
+app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
+  [check('Username', 'Username is required').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()],
+   (req, res) => {
 
-    var errors = req.validationErrors();
+    var errors = validationResult(req);
 
-    if (errors) {
-      return res.status(422).json({ errors: errors });
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array()
+      });
     }
 
     var hashedPassword = Users.hashPassword(req.body.Password);
@@ -222,7 +226,10 @@ function(err, updatedUser) {
 });
 });
 
-
+app.use(function (err, req, res,  next) {
+  console.error(err.stack);
+  res.status(500).send('Something got slashed!');
+});
 
 
 //listen for requests
