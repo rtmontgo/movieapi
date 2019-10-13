@@ -21,7 +21,7 @@ const Users = Models.User;
 /////////////CONNECT TO MONGODB//////////////////
 
 //connecting Mongoose to the database
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
+mongoose.connect('mongodb+srv://rtmontgo:Zombie3!@tmont-3jagp.mongodb.net/HoHdb?retryWrites=true&w=majority', {useNewUrlParser: true});mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
 /////////////MIDDLEWARE FUNCTIONS////////////////
 
