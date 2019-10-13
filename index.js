@@ -9,7 +9,7 @@ const Users = Models.User;
 
 mongoose.set('useFindAndModify', false);
 //mongoose.connect('mongodb://localhost:27017/HoHdb', {useNewUrlParser: true});
-mongoose.connect('mongodb+srv://rtmontgo:Zombie3!@tmont-3jagp.mongodb.net/HoHdb?retryWrites=true&w=majority', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://rtmontgo:Zombie3%21@tmont-3jagp.mongodb.net/HoHdb?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 const app = express();
 
