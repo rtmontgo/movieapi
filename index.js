@@ -106,11 +106,10 @@ app.get('/users', passport.authenticate('jwt', { session: false }), function(req
 //   Birthday : Date
 // }
 
-app.post('/users',
+app.post('/users', (req, res) => {
   [check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').isLength({ min: 5 }),
   check('Email', 'Email does not appear to be valid').isEmail()],
-  (req, res) => {
     //check validation object for errors
     const errors = validationResult(req);
 
