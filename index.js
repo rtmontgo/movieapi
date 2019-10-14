@@ -111,7 +111,7 @@ app.post('/users', (req, res) => {
   check('Password', 'Password is required').isLength({ min: 5 }),
   check('Email', 'Email does not appear to be valid').isEmail()],
     //check validation object for errors
-    const errors = validationResult(req);
+    errors = validationResult(req);
 
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array()
