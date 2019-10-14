@@ -136,9 +136,12 @@ app.post('/users',
             .catch(function (error) {
               console.error(error);
               res.status(500).send("Error: " + error);
-            })
+            });
         }
-      })
+      }).catch(function (error) {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
   });
 
 //Delete a user profille
