@@ -132,11 +132,6 @@ app.post('/users',
               Email: req.body.Email,
               Birthday: req.body.Birthday
             })
-            .then(function (user) { res.status(201).json(user) })
-            .catch(function (error) {
-              console.error(error);
-              res.status(500).send("Error: " + error);
-            });
         }
       }).catch(function (error) {
         console.error(error);
