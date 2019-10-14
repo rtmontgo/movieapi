@@ -108,10 +108,10 @@ app.get('/users', passport.authenticate('jwt', { session: false }), function(req
 
 app.post('/users', (req, res) => {
   // Validation logic here for request
-  req.checkBody('Username', 'Username is required').isLength({ min: 5 }),
-    req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
-    req.checkBody('Password', 'Password is required').notEmpty(),
-    req.checkBody('Email', 'Email does not appear to be valid').isEmail()
+  req.checkBody('Username', 'Username is required').isLength({ min: 5 });
+    req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric();
+    req.checkBody('Password', 'Password is required').notEmpty();
+    req.checkBody('Email', 'Email does not appear to be valid').isEmail();
   //check validation object for errors
   var errors = req.validationErrors();
   if (errors) {
