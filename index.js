@@ -22,7 +22,7 @@ app.use(morgan('common'));
 app.use(bodyParser.json());
 app.use(cors());
 
-const auth = require('./auth')(app);
+var auth = require('./auth')(app);
 
 
 app.use(function (err, req, res, next) {

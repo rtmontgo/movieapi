@@ -26,6 +26,10 @@ var userSchema = mongoose.Schema({
   Favorites : [{ type : mongoose.Schema.Types.ObjectId, ref : 'Movie'}]
 });
 
+userSchema.statics.hashPassword = function(password) {
+  return bcrypt.hashSync(password, 10);
+};
+
 userSchema.methods.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.Password); };
 
