@@ -45,7 +45,7 @@ app.get('/movies'), function (req, res) {
       console.error(err);
       res.status(500).send("Error: " + err);
     });
-});
+};
 
 //Get info about a single movie by title
 app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), function (req, res) {
