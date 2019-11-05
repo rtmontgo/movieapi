@@ -9,6 +9,7 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const passport = require('passport');
 const cors = require('cors');
+let allowedOrigins = ['*'];
 const { check, validationResult } = require('express-validator');
 require('./passport');
 
