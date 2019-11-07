@@ -43,7 +43,7 @@ export class MainView extends React.Component {
     //If the state isn't initialized, this will throw on runtime before the data is initially loaded
     const { movies, selectedMovie } = this.state;
 
-    //Before the moviess have been loaded
+    //Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
 
     return (

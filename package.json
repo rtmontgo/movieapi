@@ -21,6 +21,8 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "react-navigation": "^4.0.10",
+    "react-router-dom": "^5.1.2",
     "uuid": "^3.3.3",
     "validator": "^11.1.0"
   }

@@ -33542,7 +33542,7 @@ function (_React$Component) {
           return _onClick(movie);
         },
         className: "movie-card"
-      }, movie.Title);
+      }, movie.Title || movie.Name);
     }
   }]);
 
@@ -33598,7 +33598,9 @@ function (_React$Component) {
   _createClass(MovieView, [{
     key: "render",
     value: function render() {
-      var movie = this.props.movie;
+      var _this$props = this.props,
+          movie = _this$props.movie,
+          onClick = _this$props.onClick;
       if (!movie) return null;
       return _react.default.createElement("div", {
         className: "movie-view"
@@ -33611,7 +33613,7 @@ function (_React$Component) {
         className: "label"
       }, "Title: "), _react.default.createElement("span", {
         className: "value"
-      }, movie.Title)), _react.default.createElement("div", {
+      }, movie.Title || movie.Name)), _react.default.createElement("div", {
         className: "movie-description"
       }, _react.default.createElement("span", {
         className: "label"
@@ -33623,7 +33625,12 @@ function (_React$Component) {
         className: "label"
       }, "Director: "), _react.default.createElement("span", {
         className: "value"
-      }, movie.Director.Name)));
+      }, movie.Director.Name)), _react.default.createElement("button", {
+        title: "Go Back",
+        onClick: function onClick() {
+          return pushState("/movies");
+        }
+      }));
     }
   }]);
 
@@ -33902,7 +33909,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53907" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49375" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

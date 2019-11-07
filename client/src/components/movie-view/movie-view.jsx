@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 export class MovieView extends React.Component {
 
@@ -9,7 +10,7 @@ export class MovieView extends React.Component {
   }
 
   render() {
-    const { movie } = this.props;
+    const { movie, onClick } = this.props;
 
     if (!movie) return null;
 
@@ -18,7 +19,7 @@ export class MovieView extends React.Component {
         <img className="movie-poster" src={movie.ImagePath} />
         <div className="movie-title">
           <span className="label">Title: </span>
-          <span className="value">{movie.Title}</span>
+          <span className="value">{movie.Title || movie.Name}</span>
         </div>
         <div className="movie-description">
           <span className="label">Description: </span>
@@ -28,7 +29,9 @@ export class MovieView extends React.Component {
           <span className="label">Director: </span>
           <span className="value">{movie.Director.Name}</span>
         </div>
-      </div>
+        <Link to="/movies">
+        <button>Go Back</button></Link>
+      </div >
     );
   }
 }
