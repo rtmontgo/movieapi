@@ -33600,7 +33600,8 @@ function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           movie = _this$props.movie,
-          onClick = _this$props.onClick;
+          back = _this$props.back,
+          _onClick = _this$props.onClick;
       if (!movie) return null;
       return _react.default.createElement("div", {
         className: "movie-view"
@@ -33625,12 +33626,14 @@ function (_React$Component) {
         className: "label"
       }, "Director: "), _react.default.createElement("span", {
         className: "value"
-      }, movie.Director.Name)), _react.default.createElement("button", {
-        title: "Go Back",
+      }, movie.Director.Name)), _react.default.createElement("div", {
         onClick: function onClick() {
-          return pushState("/movies");
-        }
-      }));
+          return _onClick("back-button");
+        },
+        className: "main-view"
+      }, " ", _react.default.createElement("button", {
+        className: "back-button"
+      }, "Go Back")));
     }
   }]);
 
@@ -33727,7 +33730,7 @@ function (_React$Component) {
       //If the state isn't initialized, this will throw on runtime before the data is initially loaded
       var _this$state = this.state,
           movies = _this$state.movies,
-          selectedMovie = _this$state.selectedMovie; //Before the moviess have been loaded
+          selectedMovie = _this$state.selectedMovie; //Before the movies have been loaded
 
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
@@ -33909,7 +33912,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49375" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65478" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

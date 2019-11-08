@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 
 export class MovieView extends React.Component {
 
@@ -10,7 +9,7 @@ export class MovieView extends React.Component {
   }
 
   render() {
-    const { movie, onClick } = this.props;
+    const { movie, back, onClick } = this.props;
 
     if (!movie) return null;
 
@@ -29,8 +28,8 @@ export class MovieView extends React.Component {
           <span className="label">Director: </span>
           <span className="value">{movie.Director.Name}</span>
         </div>
-        <Link to="/movies">
-        <button>Go Back</button></Link>
+        <div onClick={() => onClick("back-button")} className="main-view"> <button className="back-button">Go Back</button></div>
+
       </div >
     );
   }
