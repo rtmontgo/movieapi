@@ -1,3 +1,59 @@
+.btn-link {
+  font-size: 100%;
+}
+
+.form-text {
+  vertical-align: middle;
+}
+
+.login-view {
+  width: 18rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  box-shadow: 0 2px 10px 0;
+}
+.regContainer {
+  border-radius: 15px;
+  color: bisque;
+  margin-top: 20px;
+}
+.card-text {
+  display: block;
+  display: -webkit-box;
+  max-width: 400px;
+  height: auto;
+  margin: 0 auto;
+  font-style: Merriweather, sans-serif;
+  font-size: 18px;
+  line-height: 1.4;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+div.card-body {
+  text-transform: capitalize;
+}
+
+div.card-title {
+  text-align: center;
+}
+.main-view {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+.card {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  min-height: 34rem;
+  box-shadow: 0 2px 10px 0;
+}
+
+.card:hover {
+  cursor: pointer;
+}
 .my-flix {
   color: steelblue;
 }

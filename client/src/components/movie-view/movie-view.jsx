@@ -1,4 +1,8 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import PropTypes from 'prop-types';
+import './movie-view.scss';
 
 export class MovieView extends React.Component {
 
@@ -14,24 +18,37 @@ export class MovieView extends React.Component {
     if (!movie) return null;
 
     return (
-      <div className="movie-view">
-        <img className="movie-poster" src={movie.ImagePath} />
-        <div className="movie-title">
-          <span className="label">Title: </span>
-          <span className="value">{movie.Title || movie.Name}</span>
-        </div>
-        <div className="movie-description">
-          <span className="label">Description: </span>
-          <span className="value">{movie.Description}</span>
-        </div>
-        <div className="movie-director">
-          <span className="label">Director: </span>
-          <span className="value">{movie.Director.Name}</span>
-        </div>
-        <div className="go-back" onClick={() => onClick()}><button>Go Back</button>
-        </div>
-
-      </div >
+      <div>
+        <Card style={{ width: '80%' }}>
+          <Card.Img variant="top" src={movie.ImagePath} />
+          <Card.Body>
+            <Card.Title>{movie.Title || movie.Name}</Card.Title>
+            <Card.Text>Description: {movie.Description || movie.Bio}</Card.Text>
+            <Card.Text>Genre: {movie.Genre.Name}</Card.Text>
+            <Card.Text>Description: {movie.Genre.Description}</Card.Text>
+            <Card.Text>Director: {movie.Director.Name}</Card.Text>
+            <Card.Text>Bio: {movie.Director.Bio}</Card.Text>
+            <Button variant="primary" onClick={() => onClick()} className="go-back">Go Back</Button>
+          </Card.Body>
+        </Card>
+      </div>
     );
   }
 }
+
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string,
+    Name: PropTypes.string,
+    ImageUrl: PropTypes.string,
+    Description: PropTypes.string,
+    Genre: PropTypes.shape({
+      Name: PropTypes.string,
+      Description: PropTypes.string
+    }),
+    Director: PropTypes.shape({
+      Name: PropTypes.string,
+      Bio: PropTypes.string
+    })
+  }).isRequired
+};
