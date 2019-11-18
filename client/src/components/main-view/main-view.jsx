@@ -27,11 +27,10 @@ export class MainView extends React.Component {
   }
 
   //One of the hooks available in a React Component 
-  getMovies(token) {
-    axios.get('https://homeofhorror.herokuapp.com/movies', {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+  componentDidMount() {
+    axios.get('https://homeofhorror.herokuapp.com/movies')
       .then(response => {
+        console.log(response);
         //Assign the result to the state
         this.setState({
           movies: response.data
@@ -57,6 +56,21 @@ export class MainView extends React.Component {
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
+  }
+
+  getMovies(token) {
+    axios.get('https://homeofhorror.herokuapp.com/movies', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => {
+        //Assign the result to the state
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   onButtonClick() {
