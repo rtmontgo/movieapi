@@ -1,3 +1,60 @@
+* {
+  box-sizing: border-box;
+}
+
+.update-form {
+  justify-content: center;
+  margin: auto;
+  font-family: "Merriweather", sans-serif;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  padding: 20px;
+  width: 50%;
+}
+
+.profile-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Merriweather", sans-serif;
+}
+
+div.profile-title {
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-register, .btn-delete {
+  margin: 10px;
+}
+
+.edit-btn {
+  margin-left: 15rem;
+}
+
+.card-img-top.profile-logo {
+  width: 30%;
+}
+
+.row {
+  margin-top: 10px;
+}
+
+p.favouriteMovies {
+  display: inline;
+}
+
+img.update-img {
+  padding: 10px;
+}
+
+p.update-title {
+  font-size: 20px;
+}
+
+div.profile-view.card {
+  margin: auto;
+}
 .btn-link {
   font-size: 100%;
 }
@@ -23,36 +80,80 @@
   max-width: 400px;
   height: auto;
   margin: 0 auto;
-  font-style: Merriweather, sans-serif;
+  font-style: "Merriweather", sans-serif;
   font-size: 18px;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+div.card-body {
   line-height: 1.4;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-div.card-body {
-  text-transform: capitalize;
-}
 
-div.card-title {
+div.card {
   text-align: center;
 }
+* {
+  box-sizing: border-box;
+}
+
+.director-info {
+  justify-content: center;
+  margin: auto;
+  font-family: "Merriweather", sans-serif;
+}
+
+.return-btn {
+  margin: 10px;
+  padding: 5px;
+}
+
+.director-name {
+  font-weight: bold;
+  text-align: center;
+}
+* {
+  box-sizing: border-box;
+}
+
+.genre-info {
+  text-align: center;
+  justify-content: center;
+  margin: auto;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.return-btn {
+  margin: 10px;
+  padding: 5px;
+}
+
+.genre-name {
+  font-weight: bold;
+}
 .main-view {
-  margin-left: auto;
-  margin-right: auto;
-  width: 90%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .card {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  min-height: 34rem;
+  display: grid;
+  margin: 2rem;
+  min-height: 37rem;
+  padding: 10px;
   box-shadow: 0 2px 10px 0;
 }
 
 .card:hover {
   cursor: pointer;
+}
+
+div.navigation {
+  margin-left: 80%;
 }
 .my-flix {
   color: steelblue;

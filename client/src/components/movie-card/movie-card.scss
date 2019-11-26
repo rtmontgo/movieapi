@@ -1,11 +1,10 @@
 $primary-color: #3a1717;
 $secondary-color: #4d402c;
 $tertiary-color: #201b12;
-$font-stack: Merriweather, sans-serif;
+$font-stack: 'Merriweather', sans-serif;
 
 $font-size: 18px;
 $line-height: 1.4;
-$lines-to-show: 3;
 
 .card-text {
   display: block;
@@ -16,8 +15,7 @@ $lines-to-show: 3;
   font-style: $font-stack;
   font-size: $font-size;
   line-height: $line-height;
-  -webkit-line-clamp: $lines-to-show;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
+
 }
