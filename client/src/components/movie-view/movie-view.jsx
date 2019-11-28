@@ -37,11 +37,11 @@ export function MovieView(props) {
         <Card.Body>
           <Card.Title>{movie.Title || movie.Name}</Card.Title>
           <Card.Text>Description: {movie.Description || movie.Bio}</Card.Text>
-          <Link to={`/genres/${movie.Genre.Name}`}><Button variant="link">Genre</Button></Link>
+          <Link to={`/genres/${movie.Genre.Name}`}><Button variant="link">{movie.Genre.Name}</Button></Link>
           <Card.Text>Genre: {movie.Genre.Name}</Card.Text>
           <Card.Text>
             Description: {movie.Genre.Description}</Card.Text>
-          <Link to={`/directors/${movie.Director.Name}`}><Button variant="link">Director</Button></Link>
+          <Link to={`/directors/${movie.Director.Name}`}><Button variant="link">{movie.Director.Name}</Button></Link>
           <Card.Text>Director: {movie.Director.Name}</Card.Text>
 
           <Card.Text>Bio: {movie.Director.Bio}</Card.Text>

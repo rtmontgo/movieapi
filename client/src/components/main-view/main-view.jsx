@@ -164,7 +164,7 @@ export class MainView extends React.Component {
           <Route path="/directors/:Name" render={({ match }) => <DirectorView directorName={match.params.Director} />}
           />
 
-          <Route path="/genres/:Genre" render={({ match }) => <GenreView genre={match.params.Genre} />
+          <Route path="/genres/:Name" render={({ match }) => <GenreView genre={match.params.Genre} />
           }
           />
 
