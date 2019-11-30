@@ -179,7 +179,7 @@ export class MainView extends React.Component {
               if (!movies) return <div className='main-view' />;
               return (
                 <GenreView
-                  genre={movies.filter(m => m.Genre.Name === match.params.name)}
+                  genre={movies.find(m => m.Genre.Name === match.params.name)}
                 />
               );
             }}

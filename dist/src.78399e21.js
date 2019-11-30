@@ -41357,7 +41357,7 @@ function (_React$Component) {
             className: "main-view"
           });
           return _react.default.createElement(_genreView.GenreView, {
-            genre: movies.filter(function (m) {
+            genre: movies.find(function (m) {
               return m.Genre.Name === match.params.name;
             })
           });
