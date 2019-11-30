@@ -35,7 +35,7 @@ export function ProfileUpdate(props) {
       Birthdate: birthdate
     };
     axios
-      .put(`https://homeofhorror.herokuapp.com/users/${user}`,
+      .put(`https://homeofhorror.herokuapp.com/users/${localStorage.getItem('user')}`,
         userInfo,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
@@ -44,6 +44,7 @@ export function ProfileUpdate(props) {
       .then(response => {
         props.updateUser(userInfo);
         alert('Profile updated successfully');
+        window.open('/', '_self');
       })
       .catch(e => {
         const errors = e.response.data.errors || [];
@@ -58,7 +59,7 @@ export function ProfileUpdate(props) {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    axios.delete(`https://homeofhorror.herokuapp.com/users/${user}`, {
+    axios.delete(`https://homeofhorror.herokuapp.com/users/${localStorage.getItem('user')}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(response => {

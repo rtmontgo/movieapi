@@ -141,7 +141,7 @@ export class MainView extends React.Component {
     return (
       <Router>
         <div className="navigation">
-          <Link to={`/users/:Username`}>
+          <Link to={`/users/${localStorage.getItem('user')}`}>
             <Button className="profile" variant='outline-info'>Profile</Button>
           </Link>
 
@@ -161,11 +161,28 @@ export class MainView extends React.Component {
 
           <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
 
-          <Route path="/directors/:Name" render={({ match }) => <DirectorView directorName={match.params.Director} />}
+          <Route
+            path='/directors/:Director'
+            render={({ match }) => {
+              if (!movies) return <div className='main-view' />;
+              return (
+                <DirectorView
+                  director={
+                    movies.find(m => m.Director.Name === match.params.name).Director}
+                />
+              );
+            }}
           />
-
-          <Route path="/genres/:Name" render={({ match }) => <GenreView genre={match.params.Genre} />
-          }
+          <Route
+            path='/genres/:Name'
+            render={({ match }) => {
+              if (!movies) return <div className='main-view' />;
+              return (
+                <GenreView
+                  genre={movies.find(m => m.Genre.Name === match.params.name)}
+                />
+              );
+            }}
           />
 
           <Route path="/users/:Username" render={({ match }) => { return <ProfileView userInfo={userInfo} /> }

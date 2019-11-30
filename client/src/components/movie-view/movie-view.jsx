@@ -14,7 +14,7 @@ export function MovieView(props) {
   function handleSubmit(event) {
     event.preventDefault();
     axios
-      .post(`https://homeofhorror.herokuapp.com/users/${localStorage.getItem('user')}/favorites/${movie._id}`, {
+      .post(`https://homeofhorror.herokuapp.com/users/${localStorage.getItem('user')}/movies/${movie._id}`, {
         Username: localStorage.getItem('user')
       },
         {

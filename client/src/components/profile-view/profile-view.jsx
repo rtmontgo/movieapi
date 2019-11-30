@@ -31,7 +31,7 @@ export class ProfileView extends React.Component {
 
   getUser(token) {
     let username = localStorage.getItem('user');
-    axios.get(`https://homeofhorror.herokuapp.com/users/${username}`, {
+    axios.get(`https://homeofhorror.herokuapp.com/users/${localStorage.getItem('user')}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
@@ -57,7 +57,7 @@ export class ProfileView extends React.Component {
   deleteFavoriteMovie(event, favoriteMovie) {
     event.preventDefault();
     console.log(favoriteMovie);
-    axios.delete(`https://homeofhorror.herokuapp.com/users/${localStorage.getItem('user')}/Favorites/${favoriteMovie}`, {
+    axios.delete(`https://homeofhorror.herokuapp.com/users/${localStorage.getItem('user')}/movies/${movie._id}`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(response => {
@@ -68,6 +68,10 @@ export class ProfileView extends React.Component {
       });
   }
 
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value })
+  }
+
   render() {
     const { username, email, birthdate, favoriteMovies } = this.state;
 
@@ -75,11 +79,11 @@ export class ProfileView extends React.Component {
       <Card className="profile-view" style={{ width: '30rem' }}>
         <Card.Body>
           <Card.Title className="profile-name">My Profile</Card.Title>
-          <Link to={`/update/${username}`}><Button className="edit-btn" size="sm" variant="info">Edit</Button>
+          <Link to={`/update/${localStorage.getItem('user')}`}><Button className="edit-btn" size="sm" variant="info">Edit</Button>
           </Link>
           <ListGroup className="list-group" variant="flush">
-            <ListGroup.Item>Username: {localStorage.getItem('username')}</ListGroup.Item>
-            <ListGroup.Item>Password: *****</ListGroup.Item>
+            <ListGroup.Item>Username: {localStorage.getItem('user')}</ListGroup.Item>
+            <ListGroup.Item>Password: {localStorage.getItem('password')}</ListGroup.Item>
             <ListGroup.Item>Email: {localStorage.getItem('email')}</ListGroup.Item>
             <ListGroup.Item>Birthdate: {localStorage.getItem('birthdate')}</ListGroup.Item>
             <ListGroup.Item>Favorite Movies:
@@ -101,6 +105,11 @@ export class ProfileView extends React.Component {
                     )}
                   </ul>
                 }
+              </div>
+              <div>
+                <Link to={`/`}>
+                  <Button className="button-back" variant="outline-info">Return to Movies</Button>
+                </Link>
               </div>
             </ListGroup.Item>
           </ListGroup>

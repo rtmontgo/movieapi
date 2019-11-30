@@ -40210,13 +40210,14 @@ function ProfileUpdate(props) {
       Birthdate: birthdate
     };
 
-    _axios.default.put("https://homeofhorror.herokuapp.com/users/".concat(user), userInfo, {
+    _axios.default.put("https://homeofhorror.herokuapp.com/users/".concat(localStorage.getItem('user')), userInfo, {
       headers: {
         Authorization: "Bearer ".concat(localStorage.getItem("token"))
       }
     }).then(function (response) {
       props.updateUser(userInfo);
       alert('Profile updated successfully');
+      window.open('/', '_self');
     }).catch(function (e) {
       var errors = e.response.data.errors || [];
       var errorMessage = '';
@@ -40231,7 +40232,7 @@ function ProfileUpdate(props) {
   var handleDelete = function handleDelete(e) {
     e.preventDefault();
 
-    _axios.default.delete("https://homeofhorror.herokuapp.com/users/".concat(user), {
+    _axios.default.delete("https://homeofhorror.herokuapp.com/users/".concat(localStorage.getItem('user')), {
       headers: {
         Authorization: "Bearer ".concat(localStorage.getItem('token'))
       }
@@ -40329,6 +40330,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -40383,7 +40386,7 @@ function (_React$Component) {
 
       var username = localStorage.getItem('user');
 
-      _axios.default.get("https://homeofhorror.herokuapp.com/users/".concat(username), {
+      _axios.default.get("https://homeofhorror.herokuapp.com/users/".concat(localStorage.getItem('user')), {
         headers: {
           Authorization: "Bearer ".concat(token)
         }
@@ -40414,7 +40417,7 @@ function (_React$Component) {
       event.preventDefault();
       console.log(favoriteMovie);
 
-      _axios.default.delete("https://homeofhorror.herokuapp.com/users/".concat(localStorage.getItem('user'), "/Favorites/").concat(favoriteMovie), {
+      _axios.default.delete("https://homeofhorror.herokuapp.com/users/".concat(localStorage.getItem('user'), "/movies/").concat(movie._id), {
         headers: {
           Authorization: "Bearer ".concat(localStorage.getItem('token'))
         }
@@ -40423,6 +40426,11 @@ function (_React$Component) {
       }).catch(function (event) {
         alert('Something went wrong');
       });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
     }
   }, {
     key: "render",
@@ -40442,7 +40450,7 @@ function (_React$Component) {
       }, _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Title, {
         className: "profile-name"
       }, "My Profile"), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/update/".concat(username)
+        to: "/update/".concat(localStorage.getItem('user'))
       }, _react.default.createElement(_Button.default, {
         className: "edit-btn",
         size: "sm",
@@ -40450,7 +40458,7 @@ function (_React$Component) {
       }, "Edit")), _react.default.createElement(_ListGroup.default, {
         className: "list-group",
         variant: "flush"
-      }, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", localStorage.getItem('username')), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", localStorage.getItem('email')), _react.default.createElement(_ListGroup.default.Item, null, "Birthdate: ", localStorage.getItem('birthdate')), _react.default.createElement(_ListGroup.default.Item, null, "Favorite Movies:", _react.default.createElement("div", null, favoriteMovies.length === 0 && _react.default.createElement("div", {
+      }, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", localStorage.getItem('user')), _react.default.createElement(_ListGroup.default.Item, null, "Password: ", localStorage.getItem('password')), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", localStorage.getItem('email')), _react.default.createElement(_ListGroup.default.Item, null, "Birthdate: ", localStorage.getItem('birthdate')), _react.default.createElement(_ListGroup.default.Item, null, "Favorite Movies:", _react.default.createElement("div", null, favoriteMovies.length === 0 && _react.default.createElement("div", {
         className: "nil"
       }, "No Favorites Yet"), favoriteMovies.length > 0 && _react.default.createElement("ul", null, favoriteMovies.map(function (favoriteMovie) {
         return _react.default.createElement("li", {
@@ -40471,7 +40479,12 @@ function (_React$Component) {
             return _this4.deleteFavoriteMovie(event, favoriteMovie);
           }
         }, "Delete"));
-      })))))));
+      }))), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/"
+      }, _react.default.createElement(_Button.default, {
+        className: "button-back",
+        variant: "outline-info"
+      }, "Return to Movies")))))));
     }
   }]);
 
@@ -40807,7 +40820,7 @@ function MovieView(props) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    _axios.default.post("https://homeofhorror.herokuapp.com/users/".concat(localStorage.getItem('user'), "/favorites/").concat(movie._id), {
+    _axios.default.post("https://homeofhorror.herokuapp.com/users/".concat(localStorage.getItem('user'), "/movies/").concat(movie._id), {
       Username: localStorage.getItem('user')
     }, {
       headers: {
@@ -41009,7 +41022,7 @@ var GenreView = function GenreView(props) {
     className: "label"
   }, props.genre, " movies"), _react.default.createElement(ListGroup, {
     className: "movies-by-genre"
-  }, props.movies.map(function (movie) {
+  }, props.movies.filter(function (movie) {
     if (movie.Genre.Name === genre.Name) {
       return _react.default.createElement(ListGroup.Item, {
         key: movie._id
@@ -41276,7 +41289,7 @@ function (_React$Component) {
       return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
         className: "navigation"
       }, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/users/:Username"
+        to: "/users/".concat(localStorage.getItem('user'))
       }, _react.default.createElement(_Button.default, {
         className: "profile",
         variant: "outline-info"
@@ -41326,19 +41339,29 @@ function (_React$Component) {
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
-        path: "/directors/:Name",
+        path: "/directors/:Director",
         render: function render(_ref3) {
           var match = _ref3.match;
+          if (!movies) return _react.default.createElement("div", {
+            className: "main-view"
+          });
           return _react.default.createElement(_directorView.DirectorView, {
-            directorName: match.params.Director
+            director: movies.find(function (m) {
+              return m.Director.Name === match.params.name;
+            }).Director
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/genres/:Name",
         render: function render(_ref4) {
           var match = _ref4.match;
+          if (!movies) return _react.default.createElement("div", {
+            className: "main-view"
+          });
           return _react.default.createElement(_genreView.GenreView, {
-            genre: match.params.Genre
+            genre: movies.find(function (m) {
+              return m.Genre.Name === match.params.name;
+            })
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -41460,7 +41483,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56572" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57259" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -61,8 +61,8 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), func
 });
 
 //Get data by genre
-app.get('/genres/:Genre', passport.authenticate('jwt', { session: false }), function (req, res) {
-  Movies.findOne({ "Genre.Name": req.params.Genre })
+app.get('/genres/:Name', passport.authenticate('jwt', { session: false }), function (req, res) {
+  Movies.findOne({ "Genre.Name": req.params.Name })
     .then(function (movies) {
       res.json(movies.Genre)
     })
@@ -73,8 +73,8 @@ app.get('/genres/:Genre', passport.authenticate('jwt', { session: false }), func
 });
 
 //Get data about a specific director
-app.get('/directors/:Director', passport.authenticate('jwt', { session: false }), function (req, res) {
-  Movies.findOne({ "Director.Name": req.params.Director })
+app.get('/directors/:Name', passport.authenticate('jwt', { session: false }), function (req, res) {
+  Movies.findOne({ "Director.Name": req.params.Name })
     .then(function (movies) {
       res.json(movies.Director)
     })
@@ -106,7 +106,7 @@ app.get('/users', passport.authenticate('jwt', { session: false }), function (re
 //   Birthday : Date
 // }
 
-app.post('/users',
+app.post('/users/:Username',
   [check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),
@@ -146,7 +146,7 @@ app.post('/users',
   });
 
 //Delete a user profille
-app.delete('/users/:Username', passport.authenticate('jwt', { session: false }), function (req, res) {
+app.delete('/update/:Username', passport.authenticate('jwt', { session: false }), function (req, res) {
   Users.findOneAndRemove({ Username: req.params.Username })
     .then(function (user) {
       if (!user) {
@@ -162,7 +162,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 });
 
 //Update user profile
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }),
+app.put('/update/:Username', passport.authenticate('jwt', { session: false }),
   [check('Username', 'Username is required').isLength({ min: 5 }),
   check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
   check('Password', 'Password is required').not().isEmpty(),

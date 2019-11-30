@@ -36,7 +36,7 @@ export const GenreView = (props) => {
       <br />
       <h3 className="label">{props.genre} movies</h3>
       <ListGroup className="movies-by-genre">
-        {props.movies.map(movie => {
+        {props.movies.filter(movie => {
           if (movie.Genre.Name === genre.Name) {
             return (
               <ListGroup.Item key={movie._id}>
