@@ -30,7 +30,6 @@ export class ProfileView extends React.Component {
   }
 
   getUser(token) {
-    let username = localStorage.getItem('user');
     axios.get(`https://homeofhorror.herokuapp.com/users/${localStorage.getItem('user')}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -97,7 +96,7 @@ export class ProfileView extends React.Component {
                       <p className="favs">
                         {JSON.parse(localStorage.getItem('movies')).find(movie => movie._id === favoriteMovie).Title}
                       </p>
-                      <Link to={`/movies/${favoriteMovie}`}>
+                      <Link to={`/movies/${movie._id}`}>
                         <Button size="sm" variant="info">Open</Button>
                       </Link>
                       <Button variant="secondary" size="sm" onClick={(event) => this.deleteFavoriteMovie(event, favoriteMovie)}>Delete</Button>
@@ -106,6 +105,7 @@ export class ProfileView extends React.Component {
                   </ul>
                 }
               </div>
+              <br />
               <div>
                 <Link to={`/`}>
                   <Button className="button-back" variant="outline-info">Return to Movies</Button>

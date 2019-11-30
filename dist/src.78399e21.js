@@ -40384,8 +40384,6 @@ function (_React$Component) {
     value: function getUser(token) {
       var _this2 = this;
 
-      var username = localStorage.getItem('user');
-
       _axios.default.get("https://homeofhorror.herokuapp.com/users/".concat(localStorage.getItem('user')), {
         headers: {
           Authorization: "Bearer ".concat(token)
@@ -40468,7 +40466,7 @@ function (_React$Component) {
         }, JSON.parse(localStorage.getItem('movies')).find(function (movie) {
           return movie._id === favoriteMovie;
         }).Title), _react.default.createElement(_reactRouterDom.Link, {
-          to: "/movies/".concat(favoriteMovie)
+          to: "/movies/".concat(movie._id)
         }, _react.default.createElement(_Button.default, {
           size: "sm",
           variant: "info"
@@ -40479,7 +40477,7 @@ function (_React$Component) {
             return _this4.deleteFavoriteMovie(event, favoriteMovie);
           }
         }, "Delete"));
-      }))), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
+      }))), _react.default.createElement("br", null), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         className: "button-back",
@@ -41339,7 +41337,7 @@ function (_React$Component) {
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
-        path: "/directors/:Director",
+        path: "/directors/:Name",
         render: function render(_ref3) {
           var match = _ref3.match;
           if (!movies) return _react.default.createElement("div", {
@@ -41359,7 +41357,7 @@ function (_React$Component) {
             className: "main-view"
           });
           return _react.default.createElement(_genreView.GenreView, {
-            genre: movies.find(function (m) {
+            genre: movies.filter(function (m) {
               return m.Genre.Name === match.params.name;
             })
           });
@@ -41483,7 +41481,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57259" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61558" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
