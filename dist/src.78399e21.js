@@ -40510,17 +40510,15 @@ exports.RegistrationView = RegistrationView;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
+var _axios = _interopRequireDefault(require("axios"));
 
-var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
 
 var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
+var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+
 require("./registration-view.scss");
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40540,24 +40538,24 @@ function RegistrationView(props) {
   var _useState = (0, _react.useState)(''),
       _useState2 = _slicedToArray(_useState, 2),
       username = _useState2[0],
-      createUsername = _useState2[1];
+      setUsername = _useState2[1];
 
   var _useState3 = (0, _react.useState)(''),
       _useState4 = _slicedToArray(_useState3, 2),
       password = _useState4[0],
-      createPassword = _useState4[1];
+      setPassword = _useState4[1];
 
   var _useState5 = (0, _react.useState)(''),
       _useState6 = _slicedToArray(_useState5, 2),
       email = _useState6[0],
-      createEmail = _useState6[1];
+      setEmail = _useState6[1];
 
   var _useState7 = (0, _react.useState)(''),
       _useState8 = _slicedToArray(_useState7, 2),
       birthdate = _useState8[0],
-      createBirthdate = _useState8[1];
+      setBirthdate = _useState8[1];
 
-  var handleSubmit = function handleSubmit(e) {
+  var handleRegister = function handleRegister(e) {
     e.preventDefault();
 
     _axios.default.post('https://homeofhorror.herokuapp.com/users', {
@@ -40568,58 +40566,58 @@ function RegistrationView(props) {
     }).then(function (response) {
       var data = response.data;
       console.log(data);
-      window.open('/', '_self');
+      window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
     }).catch(function (e) {
       console.log('error registering the user');
     });
-
-    return _react.default.createElement(_Container.default, {
-      className: "regContainer"
-    }, _react.default.createElement(_Form.default, {
-      className: "regForm"
-    }, _react.default.createElement(_Form.default.Group, {
-      controlId: "formUsername"
-    }, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
-      type: "text",
-      placeholder: "Username",
-      value: username,
-      onChange: function onChange(e) {
-        return createUsername(e.target.value);
-      }
-    })), _react.default.createElement(_Form.default.Group, {
-      controlId: "formPassword"
-    }, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
-      type: "password",
-      placeholder: "Password",
-      value: password,
-      onChange: function onChange(e) {
-        return createPassword(e.target.value);
-      }
-    })), _react.default.createElement(_Form.default.Group, {
-      controlId: "formEmail"
-    }, _react.default.createElement(_Form.default.Label, null, "Email"), _react.default.createElement(_Form.default.Control, {
-      type: "email",
-      placeholder: "Enter email",
-      value: email,
-      onChange: function onChange(e) {
-        return createEmail(e.target.value);
-      }
-    })), _react.default.createElement(_Form.default.Group, {
-      controlId: "formBirthdate"
-    }, _react.default.createElement(_Form.default.Label, null, "Birthdate"), _react.default.createElement(_Form.default.Control, {
-      type: "date",
-      placeholder: "MM/DD/YYYY",
-      onChange: function onChange(e) {
-        return createBirthdate(e.target.value);
-      }
-    })), _react.default.createElement(_Button.default, {
-      variant: "primary",
-      type: "submit",
-      onClick: handleSubmit
-    }, "Submit Registration")));
   };
+
+  return _react.default.createElement(_Container.default, {
+    className: "regContainer"
+  }, _react.default.createElement(_Form.default, {
+    className: "regForm"
+  }, _react.default.createElement(_Form.default.Group, {
+    controlId: "formUsername"
+  }, _react.default.createElement(_Form.default.Label, null, "Username"), _react.default.createElement(_Form.default.Control, {
+    type: "string",
+    placeholder: "Username",
+    value: username,
+    onChange: function onChange(e) {
+      return setUsername(e.target.value);
+    }
+  })), _react.default.createElement(_Form.default.Group, {
+    controlId: "formPassword"
+  }, _react.default.createElement(_Form.default.Label, null, "Password"), _react.default.createElement(_Form.default.Control, {
+    type: "password",
+    placeholder: "Password",
+    value: password,
+    onChange: function onChange(e) {
+      return setPassword(e.target.value);
+    }
+  })), _react.default.createElement(_Form.default.Group, {
+    controlId: "formEmail"
+  }, _react.default.createElement(_Form.default.Label, null, "Email"), _react.default.createElement(_Form.default.Control, {
+    type: "email",
+    placeholder: "Enter email",
+    value: email,
+    onChange: function onChange(e) {
+      return setEmail(e.target.value);
+    }
+  })), _react.default.createElement(_Form.default.Group, {
+    controlId: "formBirthdate"
+  }, _react.default.createElement(_Form.default.Label, null, "Birthdate"), _react.default.createElement(_Form.default.Control, {
+    type: "date",
+    placeholder: "MM/DD/YYYY",
+    onChange: function onChange(e) {
+      return setBirthdate(e.target.value);
+    }
+  })), _react.default.createElement(_Button.default, {
+    variant: "primary",
+    type: "submit",
+    onClick: handleRegister
+  }, "Submit Registration")));
 }
-},{"react":"../node_modules/react/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","./registration-view.scss":"components/registration-view/registration-view.scss","prop-types":"../node_modules/prop-types/index.js","axios":"../node_modules/axios/index.js"}],"components/login-view/login-view.jsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","axios":"../node_modules/axios/index.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","./registration-view.scss":"components/registration-view/registration-view.scss"}],"components/login-view/login-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -40634,6 +40632,8 @@ var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
+
+var _reactRouterDom = require("react-router-dom");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -40709,23 +40709,19 @@ function LoginView(props) {
     onClick: handleSubmit
   }, "Submit"), _react.default.createElement(_Form.default.Group, {
     controlId: "newUser"
-  }, _react.default.createElement(_Form.default.Text, null, "New User? ", _react.default.createElement(_Button.default, {
+  }, _react.default.createElement(_Form.default.Text, null, "New User? ", _react.default.createElement(_reactRouterDom.Link, {
+    to: "/register"
+  }, _react.default.createElement(_Button.default, {
     id: "registerButton",
-    variant: "link",
-    onClick: function onClick() {
-      return props.onClick();
-    }
-  }, " Click here ")))));
+    variant: "link"
+  }, " Register Now "))))));
 }
 
 LoginView.propTypes = {
-  username: _propTypes.default.string.isRequired,
-  password: _propTypes.default.string.isRequired,
-  newUser: _propTypes.default.func.isRequired,
   onLoggedIn: _propTypes.default.func.isRequired,
   onClick: _propTypes.default.func.isRequired
 };
-},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","prop-types":"../node_modules/prop-types/index.js","axios":"../node_modules/axios/index.js","./login-view.scss":"components/login-view/login-view.scss","../registration-view/registration-view":"components/registration-view/registration-view.jsx"}],"components/movie-card/movie-card.scss":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-bootstrap/Form":"../node_modules/react-bootstrap/esm/Form.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Container":"../node_modules/react-bootstrap/esm/Container.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","prop-types":"../node_modules/prop-types/index.js","axios":"../node_modules/axios/index.js","./login-view.scss":"components/login-view/login-view.scss","../registration-view/registration-view":"components/registration-view/registration-view.jsx"}],"components/movie-card/movie-card.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -41270,6 +41266,7 @@ function (_React$Component) {
           selectedMovie = _this$state.selectedMovie,
           user = _this$state.user,
           userInfo = _this$state.userInfo,
+          login = _this$state.login,
           register = _this$state.register,
           token = _this$state.token;
       if (register) return _react.default.createElement(_registrationView.RegistrationView, {
@@ -41303,10 +41300,7 @@ function (_React$Component) {
         exact: true,
         path: "/",
         render: function render() {
-          if (!user && register === false) return _react.default.createElement(_loginView.LoginView, {
-            onClick: function onClick() {
-              return _this4.register();
-            },
+          if (!user) return _react.default.createElement(_loginView.LoginView, {
             onLoggedIn: function onLoggedIn(user) {
               return _this4.onLoggedIn(user);
             }
@@ -41337,7 +41331,7 @@ function (_React$Component) {
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
-        path: "/directors/:Name",
+        path: "/directors/:name",
         render: function render(_ref3) {
           var match = _ref3.match;
           if (!movies) return _react.default.createElement("div", {
@@ -41353,13 +41347,13 @@ function (_React$Component) {
         path: "/genres/:Name",
         render: function render(_ref4) {
           var match = _ref4.match;
-          if (!movies) return _react.default.createElement("div", {
+          if (!movies || !movies.length) return _react.default.createElement("div", {
             className: "main-view"
           });
           return _react.default.createElement(_genreView.GenreView, {
             genre: movies.find(function (m) {
-              return m.Genre.Name === match.params.name;
-            })
+              return m.genre.Name === match.params.name;
+            }).Genre
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -41481,7 +41475,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61558" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58312" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

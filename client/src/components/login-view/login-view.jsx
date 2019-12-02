@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import './login-view.scss';
@@ -40,7 +41,8 @@ export function LoginView(props) {
         </Form.Group>
         <Button variant='primary' onClick={handleSubmit}>Submit</Button>
         <Form.Group controlId='newUser'>
-          <Form.Text>New User? <Button id='registerButton' variant='link' onClick={() => props.onClick()}> Click here </Button></Form.Text>
+          <Form.Text>New User? <Link to={`/register`}><Button id='registerButton' variant='link'> Register Now </Button></Link>
+          </Form.Text>
         </Form.Group>
       </Form>
     </Container>
@@ -48,9 +50,6 @@ export function LoginView(props) {
 }
 
 LoginView.propTypes = {
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  newUser: PropTypes.func.isRequired,
   onLoggedIn: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired
 };

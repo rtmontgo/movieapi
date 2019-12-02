@@ -132,7 +132,7 @@ export class MainView extends React.Component {
   render() {
     //if the state isn't initialized, this will throw on runtime
     //before the data is initially loaded
-    const { movies, selectedMovie, user, userInfo, register, token } = this.state;
+    const { movies, selectedMovie, user, userInfo, login, register, token } = this.state;
 
     if (register) return <RegistrationView onClick={() => this.alreadyMember()} onSignedIn={user => this.onSignedIn(user)} />
 
@@ -150,7 +150,7 @@ export class MainView extends React.Component {
 
         <div className="main-view">
           <Route exact path="/" render={() => {
-            if (!user && register === false) return <LoginView onClick={() => this.register()} onLoggedIn={user => this.onLoggedIn(user)} />;
+            if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             return movies.map(m => <MovieCard key={m._id} movie={m} />)
           }
           } />
@@ -162,27 +162,24 @@ export class MainView extends React.Component {
           <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
 
           <Route
-            path='/directors/:Name'
+            path='/directors/:name'
             render={({ match }) => {
               if (!movies) return <div className='main-view' />;
-              return (
-                <DirectorView
-                  director={
-                    movies.find(m => m.Director.Name === match.params.name).Director}
-                />
-              );
+              return <DirectorView
+                director={
+                  movies.find(m => m.Director.Name === match.params.name).Director}
+              />
             }}
           />
           <Route
             path='/genres/:Name'
             render={({ match }) => {
-              if (!movies) return <div className='main-view' />;
-              return (
-                <GenreView
-                  genre={movies.find(m => m.Genre.Name === match.params.name)}
-                />
-              );
-            }}
+              if (!movies || !movies.length) return <div className='main-view' />;
+              return <GenreView
+                genre={movies.find(m => m.genre.Name === match.params.name).Genre}
+              />
+            }
+            }
           />
 
           <Route path="/users/:Username" render={({ match }) => { return <ProfileView userInfo={userInfo} /> }
