@@ -166,7 +166,7 @@ export class MainView extends React.Component {
             render={({ match }) => {
               if (!movies) return <div className='main-view' />;
               return <DirectorView
-                director={
+                name={
                   movies.find(m => m.Director.Name === match.params.name).Director}
               />
             }}

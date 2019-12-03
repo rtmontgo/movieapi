@@ -40836,11 +40836,11 @@ function MovieView(props) {
     to: "/genres/".concat(movie.Genre.Name)
   }, _react.default.createElement(_Button.default, {
     variant: "link"
-  }, movie.Genre.Name)), _react.default.createElement(_Card.default.Text, null, "Genre: ", movie.Genre.Name), _react.default.createElement(_Card.default.Text, null, "Description: ", movie.Genre.Description), _react.default.createElement(_reactRouterDom.Link, {
+  }, movie.Genre.Name)), _react.default.createElement(_Card.default.Text, null, "Genre: ", movie.Genre.Name), _react.default.createElement(_Card.default.Text, null, "Description: ", movie.Genre.Description), _react.default.createElement(_Card.default.Text, null, "Director:", _react.default.createElement(_reactRouterDom.Link, {
     to: "/directors/".concat(movie.Director.Name)
   }, _react.default.createElement(_Button.default, {
     variant: "link"
-  }, movie.Director.Name)), _react.default.createElement(_Card.default.Text, null, "Director: ", movie.Director.Name), _react.default.createElement(_Card.default.Text, null, "Bio: ", movie.Director.Bio)), _react.default.createElement(_Button.default, {
+  }, movie.Director.Name))), _react.default.createElement(_Card.default.Text, null, "Bio: ", movie.Director.Bio)), _react.default.createElement(_Button.default, {
     block: true,
     variant: "outline-primary",
     onClick: function onClick(event) {
@@ -40868,7 +40868,7 @@ MovieView.propTypes = {
       Name: _propTypes.default.string,
       Bio: _propTypes.default.string
     })
-  }).isRequired
+  })
 };
 },{"react":"../node_modules/react/index.js","react-bootstrap/Button":"../node_modules/react-bootstrap/esm/Button.js","react-bootstrap/Card":"../node_modules/react-bootstrap/esm/Card.js","prop-types":"../node_modules/prop-types/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./movie-view.scss":"components/movie-view/movie-view.scss","axios":"../node_modules/axios/index.js"}],"components/director-view/director-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
@@ -41338,7 +41338,7 @@ function (_React$Component) {
             className: "main-view"
           });
           return _react.default.createElement(_directorView.DirectorView, {
-            director: movies.find(function (m) {
+            name: movies.find(function (m) {
               return m.Director.Name === match.params.name;
             }).Director
           });

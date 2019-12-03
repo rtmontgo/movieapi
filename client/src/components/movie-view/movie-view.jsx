@@ -41,9 +41,9 @@ export function MovieView(props) {
           <Card.Text>Genre: {movie.Genre.Name}</Card.Text>
           <Card.Text>
             Description: {movie.Genre.Description}</Card.Text>
+          <Card.Text>Director:
           <Link to={`/directors/${movie.Director.Name}`}><Button variant="link">{movie.Director.Name}</Button></Link>
-          <Card.Text>Director: {movie.Director.Name}</Card.Text>
-
+          </Card.Text>
           <Card.Text>Bio: {movie.Director.Bio}</Card.Text>
         </Card.Body>
         <Button block variant="outline-primary" onClick={event => handleSubmit(event)}>Add to Favorites</Button>
@@ -68,5 +68,5 @@ MovieView.propTypes = {
       Name: PropTypes.string,
       Bio: PropTypes.string
     })
-  }).isRequired,
+  })
 };
