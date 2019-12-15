@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import './genre-view.scss';
