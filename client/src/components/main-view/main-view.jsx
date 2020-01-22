@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
 
 import { ProfileView } from '../profile-view/profile-view';
@@ -14,8 +16,6 @@ import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import './main-view.scss';
-
-
 
 export class MainView extends React.Component {
   constructor() {
@@ -34,7 +34,7 @@ export class MainView extends React.Component {
     };
   }
 
-  //One of the hooks available in a React Component 
+  //One of the hooks available in a React Component
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
@@ -65,6 +65,7 @@ export class MainView extends React.Component {
         this.setState({
           movies: response.data
         });
+        localStorage.setItem('movies', JSON.stringify(this.state.movies));
       })
       .catch(function (error) {
         console.log(error);
@@ -127,11 +128,10 @@ export class MainView extends React.Component {
     })
   }
 
-
   render() {
     //if the state isn't initialized, this will throw on runtime
     //before the data is initially loaded
-    const { movies, user, userInfo, register, token } = this.state;
+    const { movies, selectedMovie, user, userInfo, login, register, token } = this.state;
 
     if (register) return <RegistrationView onClick={() => this.alreadyMember()} onSignedIn={user => this.onSignedIn(user)} />
 
@@ -154,33 +154,35 @@ export class MainView extends React.Component {
           }
           } />
 
-          <Route path="/register" render={() => { return <RegistrationView register={register} /> }
+          <Route path="/register" render={({ match }) => { return <RegistrationView register={register} /> }
           }
           />
 
           <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
 
           <Route
-            path='/directors/:Name'
-            render={({ match }) => (<DirectorView
-              directorName={
-                match.params.Director}
-            />
-            )}
+            path='/directors/:name'
+            render={({ match }) => {
+              if (!movies) return <div className='main-view' />;
+              return <DirectorView
+                director={
+                  movies.find(m => m.Director.Name === match.params.name).Director}
+              />
+            }}
           />
           <Route
-            path='/genres/:Name'
-            render={({ match }) => (
-              <GenreView
-                genre={match.params.Genre}
-              />
-            )}
+            path='/genres/:name'
+            render={({ match }) => {
+              if (!movies || !movies.length) return <div className="main-view" />;
+              return <GenreView genre={movies.find(m => m.Genre.Name === match.params.name).Genre} />
+            }
+            }
           />
 
-          <Route path="/users/:Username" render={() => { return <ProfileView userInfo={userInfo} /> }
+          <Route path="/users/:Username" render={({ match }) => { return <ProfileView userInfo={userInfo} /> }
           } />
 
-          <Route path="/update/:Username" render={() => {
+          <Route path="/update/:Username" render={({ match }) => {
             return <ProfileUpdate userInfo={userInfo} user={user} token={token} updateUser={data => this.updateUser(data)}
             />
           }
@@ -191,4 +193,3 @@ export class MainView extends React.Component {
     );
   }
 }
-
