@@ -1,6 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route } from "react-router-dom";
+
+import { setMovies } from '../../actions/actions';
+
+import MoviesList from '../movies-list/movies-list';
+
+
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -24,13 +33,7 @@ export class MainView extends React.Component {
 
     //Initialize the state to an empty object so we can destructure it later
     this.state = {
-      movies: [],
-      selectedMovie: null,
-      user: null,
-      register: false,
-      email: '',
-      birthdate: '',
-      userInfo: {}
+      user: null
     };
   }
 
@@ -61,11 +64,7 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
       .then(response => {
-        //Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
-        localStorage.setItem('movies', JSON.stringify(this.state.movies));
+        this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -131,14 +130,15 @@ export class MainView extends React.Component {
   render() {
     //if the state isn't initialized, this will throw on runtime
     //before the data is initially loaded
-    const { movies, selectedMovie, user, userInfo, login, register, token } = this.state;
+    let { movies } = this.props;
+    let { user } = this.state;
 
     if (register) return <RegistrationView onClick={() => this.alreadyMember()} onSignedIn={user => this.onSignedIn(user)} />
 
     //before the movies has been loaded
     if (!movies) return <div className="main-view" />;
     return (
-      <Router>
+      <Router basename="/client">
         <div className="navigation">
           <Link to={`/users/${localStorage.getItem('user')}`}>
             <Button className="profile" variant='outline-info'>Profile</Button>
@@ -193,3 +193,9 @@ export class MainView extends React.Component {
     );
   }
 }
+
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+export default connect(mapStateToProps, { setMovies })(MainView);
