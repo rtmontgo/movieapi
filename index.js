@@ -19,7 +19,7 @@ mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb+srv://rtmontgo:Zombie3%21@tmont-3jagp.mongodb.net/HoHdb?retryWrites=true&w=majority', { useNewUrlParser: true });
 
 //Middleware functions
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.use("/client", express.static(path.join(__dirname, "client", "dist")));
 app.get("/client/*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
