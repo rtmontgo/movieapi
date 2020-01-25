@@ -158,7 +158,7 @@ export class MainView extends React.Component {
             }
           />
 
-          <Route path="/users/:Username" render={({ match }) => { return <ProfileView userInfo={userInfo} /> }
+          <Route path="/users/:Username" render={({ match }) => { return <ProfileView movies={movies} /> }
           } />
 
           <Route path="/update/:Username" render={({ match }) => {
