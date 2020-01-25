@@ -16,7 +16,6 @@ import { ProfileView } from '../profile-view/profile-view';
 import { ProfileUpdate } from '../profile-view/profile-update';
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
@@ -128,13 +127,13 @@ export class MainView extends React.Component {
         </div >
 
         <div className="main-view">
-          <Route exact path="/" render={() => {
+          <Route path="/" render={() => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
             return <MoviesList />;
           }
           } />
 
-          <Route exact path="/register" render={() => <RegistrationView />}
+          <Route path="/register" render={() => <RegistrationView />}
           />
 
           <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
