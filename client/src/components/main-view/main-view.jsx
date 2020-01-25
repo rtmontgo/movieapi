@@ -160,11 +160,10 @@ export class MainView extends React.Component {
           <Route path="/users/:Username" render={({ match }) => { return <ProfileView movies={movies} /> }
           } />
 
-          <Route path="/update/:Username" render={({ match }) => {
-            return <ProfileUpdate userInfo={userInfo} user={user} token={token} updateUser={data => this.updateUser(data)}
-            />
+          <Route path="/update/:Username" render={() => <ProfileUpdate user={user} token={token} updateUser={data => this.updateUser(data)}
+          />
           }
-          } />
+          />
 
         </div>
       </Router >
