@@ -103,28 +103,13 @@ export class MainView extends React.Component {
     this.setState({
       user: null
     })
-    window.open('/', '_self');
+    window.open('/client', '_self');
   }
 
-  //testing
   onSignedIn(user) {
     this.setState({
       user: user,
-      register: false,
     });
-  }
-  //testing
-  register() {
-    this.setState({
-      register: true
-    });
-  }
-
-  //testing
-  alreadyMember() {
-    this.setState({
-      register: false
-    })
   }
 
   render() {
