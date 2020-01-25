@@ -9,10 +9,6 @@ import { setMovies } from '../../actions/actions';
 
 import MoviesList from '../movies-list/movies-list';
 
-
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
 
@@ -33,6 +29,7 @@ export class MainView extends React.Component {
 
     //Initialize the state to an empty object so we can destructure it later
     this.state = {
+      movies: [],
       user: null
     };
   }
@@ -118,8 +115,6 @@ export class MainView extends React.Component {
     let { movies } = this.props;
     let { user } = this.state;
 
-    if (register) return <RegistrationView onClick={() => this.alreadyMember()} onSignedIn={user => this.onSignedIn(user)} />
-
     //before the movies has been loaded
     if (!movies) return <div className="main-view" />;
     return (
@@ -135,12 +130,11 @@ export class MainView extends React.Component {
         <div className="main-view">
           <Route exact path="/" render={() => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-            return movies.map(m => <MovieCard key={m._id} movie={m} />)
+            return <MoviesList />;
           }
           } />
 
-          <Route path="/register" render={({ match }) => { return <RegistrationView register={register} /> }
-          }
+          <Route exact path="/register" render={() => <RegistrationView />}
           />
 
           <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
