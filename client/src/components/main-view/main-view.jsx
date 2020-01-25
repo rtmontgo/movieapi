@@ -80,13 +80,6 @@ export class MainView extends React.Component {
       });
   }
 
-  updateUser(data) {
-    this.setState({
-      userInfo: data
-    });
-    localStorage.setItem('user', data.Username);
-  }
-
   onButtonClick() {
     this.setState({
       selectedMovie: null
@@ -160,8 +153,7 @@ export class MainView extends React.Component {
           <Route path="/users/:Username" render={({ match }) => { return <ProfileView movies={movies} /> }
           } />
 
-          <Route path="/update/:Username" render={() => <ProfileUpdate user={user} token={token} updateUser={data => this.updateUser(data)}
-          />
+          <Route path="/update/:Username" render={() => <ProfileUpdate />
           }
           />
 
