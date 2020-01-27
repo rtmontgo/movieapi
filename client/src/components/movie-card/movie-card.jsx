@@ -7,7 +7,7 @@ import './movie-card.scss';
 import { Link } from 'react-router-dom';
 
 export function MovieCard(props) {
-  const { movie, movies, title } = props;
+  const { movie } = props;
 
   return (
     <Col className="movie-display">
