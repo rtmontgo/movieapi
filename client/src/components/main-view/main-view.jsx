@@ -120,9 +120,9 @@ export class MainView extends React.Component {
         </div >
 
         <div className="main-view">
-          <Route path="/" render={() => {
+          <Route exact path="/" render={() => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-            return <MoviesList />;
+            return <MoviesList movies={movies} />;
           }
           } />
 
